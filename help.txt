@@ -29,7 +29,7 @@ NAME
     set
 
 DESCRIPTION
-    This sets an attribute style linked to an id. If no id is given then the body is modified 
+    This sets an attribute style linked to an id. If no id is given then the body is modified. If the attribute does not exist yet, the attribute is added.
 
 SYNTAX
     set [id-] attribute style
