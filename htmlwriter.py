@@ -4,10 +4,10 @@ def main():
     while True:
         command = input("Enter a command (/help for help): ")
         command = command.lower()
-        if command =="done" or command == "quit":
+        if command =="exit" or command == "quit":
             break;
         if command == "/help":
-            print("help")
+            printHelp()
         else:
             for s in command:
                 if not re.match('^[a-z0-9- ]*$',s):
@@ -46,6 +46,7 @@ def set(command):
         ID = tag.split('-',1)[0]
         value = command[len(tag):]
         tag = tag.split('-',1)[1]
+        name = True
     else:
         value = command[len(tag):]
     f = open("output.css","r+")
@@ -60,9 +61,14 @@ def set(command):
                 line = next(f)
                 count+=len(line)
                 added = True
+            if "}" in line:
+                break;
             output += line
-            line = next(f)
-            count += len(line)
+            try:
+                line = next(f)
+                count += len(line)
+            except:
+                break;
         if not added:
             output+="\t"+tag+":"+value+"\n}\n"
         else:
@@ -71,18 +77,24 @@ def set(command):
         for line in f:
             output+=line
     else:
-        while not ID in line:
+        while not ID+" {" in line:
             output+=line
-            count += 1
+            line = next(f)
+            count += len(line)
         while not "}" in line:
-            output += line
             if tag in line:
-                output+="\t"+tag+":"+value+"\n}"
+                output+="\t"+tag+":"+value+"\n"
                 line = next(f)
                 count+=len(line)
                 added = True
-            line = next(f)
-            count += len(line)
+            if "}" in line:
+                break;
+            output += line
+            try:
+                line = next(f)
+                count += len(line)
+            except:
+                break;
         if not added:
             output+="\t"+tag+":"+value+"\n}\n"
         else:
@@ -104,5 +116,11 @@ def makeGeneric():
     css = "body {\n\tfont-family: 'Raleway', sans-serif;\n}"
     f.write(css)
     f.close()
-    
+
+def printHelp():
+    f = open("help.txt","r+")
+    out="\n"
+    for line in f:
+        out += line
+    print(out)
 main()

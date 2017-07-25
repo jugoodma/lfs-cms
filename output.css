@@ -1,3 +1,13 @@
 body {
 	font-family: 'Raleway', sans-serif;
+	color: green
+}
+
+test {
+	color: blue
+	size: hello
+}
+
+other {
+	color: red
 }

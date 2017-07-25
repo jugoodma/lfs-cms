@@ -1,0 +1,42 @@
+COMMANDS
+    add
+    set
+    /help
+    quit
+
+NAME
+    add
+
+DESCRIPTION
+    Add new content to your website
+
+SYNTAX
+    add option content
+
+OPTION
+    paragraph
+        this adda a new paragraph
+    
+    header
+        this add a new header
+
+EXAMPLE
+    add paragraph this is a new paragraph
+
+    add header this is a new header
+
+NAME
+    set
+
+DESCRIPTION
+    This sets an attribute style linked to an id. If no id is given then the body is modified 
+
+SYNTAX
+    set [id-] attribute style
+
+EXAMPLE
+    set color black
+        This sets the body's color as black
+    
+    set title-color black
+        This sets the item with id title color to black
