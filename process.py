@@ -12,7 +12,7 @@ pattern = '^[a-z0-9]$'
 # just a blank field)
 
 f = open("output.txt","w+")
-for s in data:
+for s in outstring:
     if re.match(pattern, s):
         outstring+= s
 f.write(outstring)
