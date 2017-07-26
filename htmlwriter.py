@@ -38,12 +38,12 @@ def add(command):
         line = next(f)
     if tag == "paragraph":
         if name:
-            output+="\t\t<p id="+ID+">\n\t\t\t" + value + "\n\t\t</p>\n"
+            output+='\t\t<p id="'+ID+'">\n\t\t\t' + value + "\n\t\t</p>\n"
         else:
             output+="\t\t<p>\n\t\t\t" + value + "\n\t\t</p>\n"
     elif tag == "header":
         if name:
-            output+="\t\t<header id="+ID+">\n\t\t\t" + value + "\n\t\t</header>\n"
+            output+='\t\t<header id="'+ID+'">\n\t\t\t' + value + "\n\t\t</header>\n"
         else:
             output+="\t\t<header>\n\t\t\t" + value + "\n\t\t</header>\n"
     else:
