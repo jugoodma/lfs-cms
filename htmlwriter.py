@@ -8,17 +8,19 @@ def main():
             break;
         if command == "/help":
             printHelp()
-        else:
-            for s in command:
-                if not re.match('^[a-z0-9- ]*$',s):
-                    print("invalid command")
-                    break;
+#        else:
+#            for s in command:
+#                if not re.match('^[a-z0-9 -]* $',s):
+#                    print("invalid command")
+#                    break;
         if re.match('^add *',command):
             if add(command[4:]) == 0:
                 break;
         elif re.match('^set *',command):
             if seta(command[4:]) == 0:
                 break;
+        elif re.match('^insert-*',command):
+            insert(command[7:])
             
 def add(command):
     name = False
@@ -47,7 +49,6 @@ def add(command):
         else:
             output+="\t\t<header>\n\t\t\t" + value + "\n\t\t</header>\n"
     else:
-        print(tag)
         return 0
     output+="\t</body>\n</html>"
     f.close()
@@ -123,8 +124,90 @@ def seta(command):
     f.write(output)
     f.close()
 
-#def insert(command):
+def insert(command):
+    where = command.split(' ',1)[0]
+    command = command[len(where)+1:]
+    ego = False
+    if ":" in command.split(' ',1)[0]:
+        ID = command.split(':',1)[0]
+        command = command[len(ID)+1:]
+        ego = True
+    what = command.split(' ',1)[0]
+    value = command[len(what)+1:]
+    f = open("output.html","r+")
+    line = next(f)
+    output = ""
+    if where == "before":
+        if ego:
+            while not 'id="'+ID in line:
+                output+=line
+                count = len(line)
+                line = next(f)
+            if what == "paragraph":
+                output+='\t\t<p id="'+ID+'">\n\t\t\t' + value + "\n\t\t</p>\n"
+            elif what == "header":
+                output+='\t\t<header id="'+ID+'">\n\t\t\t' + value + "\n\t\t</header>\n"
+            else:
+                return 0
+            output+=line
+            count = len(line)
+            f.seek(count)
+            for line in f:
+                output+=line
+        else:
+            for i, l in enumerate(f):
+                pass
+            i-=1
+            line = f.seek(i)
+            search = line.split('<',1)[0]
+            i--
+            while not search in line:
+                line = f.seek(i--)
+            f.seek(0)
+            for c in i:
+                output += f.seek(i)
+            if what == "paragraph":
+                output+='\t\t<p>\n\t\t\t' + value + "\n\t\t</p>\n"
+            elif what == "header":
+                output+='\t\t<header>\n\t\t\t' + value + "\n\t\t</header>\n"
+            else:
+                return 0
+            f.seek(i)
+            for line in f
+                output+=line
+    elif where == "after":
+        if not ego:
+            add(what+" "+value)
+        else:
+            while not 'id="'+ID in line:
+                output+=line
+                count = len(line)
+                line = next(f)
+            search = line.split('<',1)[0]
+            output+=line
+            while not search in line:
+                output+=line
+                count = len(line)
+                line = next(f)
+            if what == "paragraph":
+                output+='\t\t<p id="'+ID+'">\n\t\t\t' + value + "\n\t\t</p>\n"
+            elif what == "header":
+                output+='\t\t<header id="'+ID+'">\n\t\t\t' + value + "\n\t\t</header>\n"
+            else:
+                return 0
+            output+=line
+            count = len(line)
+            f.seek(count)
+            for line in f:
+                output+=line
     
+    else:
+        print("invalid command")
+        break;
+    print(where)
+    print(ID)
+    print(what)
+    print(value)
     
 def makeGeneric():
     f = open("output.html","w+")
