@@ -1,6 +1,7 @@
 COMMANDS
     add
     set
+    insert
     /help
     quit
 
@@ -44,3 +45,20 @@ EXAMPLE
     
     set title-color black
         This sets the item with id title color to black
+
+NAME
+    insert
+
+DESCRIPTION
+    This inserts content before the given id or before the last tag of the body. If no placement is given then before is assumed
+    
+SYNTAX
+    insert-[before/after] [id:]tag content
+    
+EXAMPLE
+    insert-before newid:paragraph this is a inserted paragraph before the section with id "new id"
+    
+    insert-after header this is a header that is inserted before the last tag of the body
+    
+    insert paragraph this inserts a paragraph before the last tag of the body
+    
