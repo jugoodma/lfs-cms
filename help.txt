@@ -11,19 +11,23 @@ DESCRIPTION
     Add new content to your website
 
 SYNTAX
-    add option content
+    add option[-id] content
 
 OPTION
     paragraph
         this adda a new paragraph
     
     header
-        this add a new header
+        this adds a new header
 
 EXAMPLE
     add paragraph this is a new paragraph
 
+    add paragraph-newid this is a paragraph with an id
+    
     add header this is a new header
+    
+    add header-newid this is a header with an id
 
 NAME
     set

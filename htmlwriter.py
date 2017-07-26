@@ -17,12 +17,19 @@ def main():
             if add(command[4:]) == 0:
                 break;
         elif re.match('^set *',command):
-            if set(command[4:]) == 0:
+            if seta(command[4:]) == 0:
                 break;
             
 def add(command):
+    name = False
     tag = command.split(' ',1)[0]
-    value = command[len(tag):]
+    if "-" in tag:
+        ID = tag.split('-',1)[1]
+        value = command[len(tag):]
+        tag = tag.split('-',1)[0]
+        name = True
+    else:
+        value = command[len(tag):]
     f = open("output.html","r+")
     line = next(f)
     output = line;
@@ -30,16 +37,25 @@ def add(command):
         output += line
         line = next(f)
     if tag == "paragraph":
-        output+="\t\t<p>" + value + "</p>\n"
+        if name:
+            output+="\t\t<p id="+ID+">\n\t\t\t" + value + "\n\t\t</p>\n"
+        else:
+            output+="\t\t<p>\n\t\t\t" + value + "\n\t\t</p>\n"
     elif tag == "header":
-        output+="\t\t<header>" + value + "</header>\n"
+        if name:
+            output+="\t\t<header id="+ID+">\n\t\t\t" + value + "\n\t\t</header>\n"
+        else:
+            output+="\t\t<header>\n\t\t\t" + value + "\n\t\t</header>\n"
+    else:
+        print(tag)
+        return 0
     output+="\t</body>\n</html>"
     f.close()
     f = open("output.html","w+")
     f.write(output)
     f.close()
 
-def set(command):
+def seta(command):
     name = False
     tag = command.split(' ',1)[0]
     if "-" in tag:
@@ -107,6 +123,9 @@ def set(command):
     f.write(output)
     f.close()
 
+#def insert(command):
+    
+    
 def makeGeneric():
     f = open("output.html","w+")
     html = '<!DOCTYPE html>\n<html lang="en">\n\t<head>\n\t\t<meta charset="UTF-8">\n\t\t<link type="text/css" rel="stylesheet" href="page.css"/>\n\t\t<title>Title Page</title>\n\t</head>\n\t<body>\n\t\t<section>\n\t\t\t<h1>\n\t\t\t\t<strong>This is A Title</strong>\n\t\t\t</h1>\n\t\t<section>\n\t\t\tLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sed euismod risus. Aenean at imperdiet nulla. Vestibulum finibus ligula sem, at sollicitudin metus commodo nec. Vestibulum sagittis turpis massa, placerat pellentesque eros pretium non. In consectetur vestibulum semper. Proin eget sapien consectetur, faucibus leo et, condimentum nunc. Cras ultricies malesuada scelerisque. Pellentesque finibus scelerisque bibendum. Aliquam sollicitudin nisl purus, vel porta massa porttitor a. Donec viverra tempor auctor.\n\t\t</section>\n\t</body>\n</html>'
