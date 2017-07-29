@@ -19,8 +19,8 @@ def main():
         elif re.match('^set *',command):
             if seta(command[4:]) == 0:
                 break;
-        elif re.match('^insert-*',command):
-            insert(command[7:])
+        elif re.match('^insert*',command):
+            insert(command[6:])
             
 def add(command):
     name = False
@@ -125,9 +125,14 @@ def seta(command):
     f.close()
 
 def insert(command):
-    where = command.split(' ',1)[0]
-    command = command[len(where)+1:]
     ego = False
+    if "-" in command:
+        where = command.split(' ',1)[0]
+        where = where[1:]
+        command = command[len(where)+1:]
+    else:
+        where = "before"
+        command = command[1:]
     if ":" in command.split(' ',1)[0]:
         ID = command.split(':',1)[0]
         command = command[len(ID)+1:]
@@ -137,6 +142,7 @@ def insert(command):
     f = open("output.html","r+")
     line = next(f)
     output = ""
+    print(where)
     if where == "before":
         if ego:
             while not 'id="'+ID in line:
@@ -158,14 +164,18 @@ def insert(command):
             for i, l in enumerate(f):
                 pass
             i-=1
-            line = f.seek(i)
+            f.seek(i)
+            line = next(f)
+            print(line)
             search = line.split('<',1)[0]
-            i--
+            i -=1
             while not search in line:
-                line = f.seek(i--)
+                line = f.seek(i)
+                i -=1
             f.seek(0)
-            for c in i:
-                output += f.seek(i)
+            for c in range(i):
+                f.seek(c)
+                output += next(f)
             if what == "paragraph":
                 output+='\t\t<p>\n\t\t\t' + value + "\n\t\t</p>\n"
             elif what == "header":
@@ -173,8 +183,12 @@ def insert(command):
             else:
                 return 0
             f.seek(i)
-            for line in f
+            for line in f:
                 output+=line
+        f.close()
+        f = open("output.html","w+")
+        f.write(output)
+        f.close()
     elif where == "after":
         if not ego:
             add(what+" "+value)
@@ -200,14 +214,12 @@ def insert(command):
             f.seek(count)
             for line in f:
                 output+=line
-    
+            f.close()
+            f = open("output.html","w+")
+            f.write(output)
+            f.close()
     else:
         print("invalid command")
-        break;
-    print(where)
-    print(ID)
-    print(what)
-    print(value)
     
 def makeGeneric():
     f = open("output.html","w+")
