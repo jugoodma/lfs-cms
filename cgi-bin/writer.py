@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+# -*- coding: UTF-8 -*-# enable debugging
 ## writer.py
 #
 # About
@@ -13,6 +15,9 @@
 import os #hmmm
 import re #hmmm
 import cgi #hmmm
+import cgitb
+
+cgitb.enable()
 
 # fileName = file name string
 # path = path to put the created file

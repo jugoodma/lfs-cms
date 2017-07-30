@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		
+		<script src="//cdn.quilljs.com/1.3.0/quill.js"></script>
+		<script src="//cdn.quilljs.com/1.3.0/quill.min.js"></script>
+		
+		<link href="//cdn.quilljs.com/1.3.0/quill.snow.css" rel="stylesheet">
+		
+		<style>
+			#editor-container {
+				height: 1000px;
+			}
+		</style>
+		
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('#userInput').click(function() {
+					$.ajax({
+						type: "POST",
+						url: "/cgi-bin/process.py",
+						data: {input: JSON.stringify(quill.getContents(),null,2)},
+						success: function(response) {    
+							alert(response);      
+						},
+						error: function(data) {
+							alert(data.responseText);
+						}
+					});
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div id="editor">
+		</div>
+		<button id="userInput" name="userInput">Submit Changes</button>
+		<script>
+			var quill = new Quill('#editor', {
+				modules: {
+					toolbar: [
+						[{ header: [1, 2, false] }],
+						['bold', 'italic', 'underline'],
+						['image', 'code-block']
+					]
+				},
+				placeholder: 'Compose an epic...',
+				theme: 'snow'  // or 'bubble'
+			});
+			$.ajax({
+				url: "/output.txt",
+				data: "Gimme data",
+				success: function(response) {
+					quill.setContents(JSON.parse(response));
+					alert("noice!");
+				}
+			});
+		</script>
+	</body>
+</html>

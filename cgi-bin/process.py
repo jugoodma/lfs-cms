@@ -1,7 +1,19 @@
+#!/usr/bin/python3
+# -*- coding: UTF-8 -*-# enable debugging
+##
+#
+##
 import re #eeeeeeeeeeeeeeee
 import cgi
+import cgitb
+from writer import *
+from config import *
+cgitb.enable()
+print("Content-Type: text/html;charset=utf-8")
+print()
+print("Success")
 
-data = cgi.FieldStorage().getvalue('userInput') # <input type="text" name="userInput">
+data = cgi.FieldStorage() # <input type="text" name="userInput">
 # data = input("Input: ")
 outstring =""
 pattern = '^[a-z0-9]$'
@@ -10,9 +22,11 @@ pattern = '^[a-z0-9]$'
 # (that way they're just editing their original text every time and not 
 # just a blank field)
 
-f = open("output.txt","w+")
-for s in data:
-    if re.match(pattern, s):
-        outstring+= s
+createFile("output.txt", "../")
+f = open("../output.txt","w+")
+#for s in data["input"].value:
+#    if re.match(pattern, s):
+#        outstring+= s
+outstring+=data["input"].value
 f.write(outstring)
 f.close()

@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+# -*- coding: UTF-8 -*-# enable debugging
 ## config.py
 #
 # About
@@ -9,6 +11,10 @@
 ##
 
 # imports
+import cgi
+import cgitb
+
+cgitb.enable()
 
 class Config:
     def __init__(self):
