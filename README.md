@@ -3,7 +3,7 @@ A light, file-based cms that runs on Python
 
 How to get started (Ubuntu/Apache):
 1. install apache2
-2. install python3
+2. install python3 (be sure /usr/bin/python3 exists!)
 3. cd into /var/www
 4. git clone -b dev https://...
 5. a2enmod cgi cgid
@@ -33,4 +33,6 @@ How to get started (Ubuntu/Apache):
 9. service apache2 restart
 10. chmod all scripts in /cgi-bin to +x
 11. chmod 762 /var/www/lfs-cms/output.txt
-12. go to localhost in browser
+12. go to localhost/public/admin in browser
+
+Ubuntu/Nginx coming soon...
