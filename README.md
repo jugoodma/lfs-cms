@@ -33,6 +33,6 @@ How to get started (Ubuntu/Apache):
 9. service apache2 restart
 10. chmod all scripts in /cgi-bin to +x
 11. chmod 762 /var/www/lfs-cms/output.txt
-12. go to localhost/public/admin in browser
+12. go to localhost/admin in browser
 
 Ubuntu/Nginx coming soon...
