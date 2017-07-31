@@ -40,19 +40,21 @@
 			var quill = new Quill('#editor', {
 				modules: {
 					toolbar: [
-						['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-						['blockquote', 'code-block'],
-						[{ 'header': 1 }, { 'header': 2 }],               // custom button values
-						[{ 'list': 'ordered'}, { 'list': 'bullet' }],
-						[{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
-						[{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
-						[{ 'direction': 'rtl' }],                         // text direction
-						[{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-						[{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-						[{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
 						[{ 'font': [] }],
-						[{ 'align': [] }],
-						['clean']                                         // remove formatting button
+						[{ 'size': ['small', false, 'large', 'huge'] }],
+						['bold', 'italic', 'underline', 'strike'],
+						[{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+						[{ 'align': '' }, { 'align': 'center' }, { 'align': 'right' }, {'align': 'justify' }],
+						[{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'list': 'check' }],
+						[{ 'script': 'sub' }, { 'script': 'super' }],
+						[{ 'indent': '+1' }, { 'indent': '-1' }],
+						['blockquote', 'code-block'],
+						['formula', 'code'],
+						[{ 'direction': 'rtl' }],
+						[{ 'float': 'left' }, { 'float': 'right' }, { 'float': 'center' }, { 'float': 'full' }],
+						[{ 'color': [] }, { 'background': [] }],
+						['image', 'video', 'link'],
+						['clean']
 					]
 				},
 				placeholder: 'Enter content here...',
@@ -60,7 +62,7 @@
 			});
 			$.ajax({
 				url: "/output.txt",
-				data: "Gimme data",
+				data: "Requesting data...",
 				success: function(response) {
 					quill.setContents(JSON.parse(response));
 					alert("noice!");
